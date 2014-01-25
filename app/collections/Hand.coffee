@@ -4,15 +4,9 @@ class window.Hand extends Backbone.Collection
 
   initialize: (array, @deck, @isDealer) ->
     @on 'add', (card) ->
-      @endgame() if @bust()
-
-    @on 'dealerTurn', ->
-      dealerPlay() if @isDealer
+      @endTurn() if @bust()
 
   hit: -> @add(@deck.pop()).last()
-
-  stand: ->
-    @trigger('dealerTurn', @)
 
   scores: ->
     # The scores are an array of potential scores.
@@ -29,10 +23,12 @@ class window.Hand extends Backbone.Collection
   bust: ->
     @scores()[0] > 21
 
-  endgame: ->
-    alert 'You lose!'
+  endTurn: ->
+    @trigger 'evaluate', @
 
   dealerPlay: ->
-    debugger
+    @models[0].flip()
+    @hit() while @scores()[0] < 17
+    @endTurn()
 
 
