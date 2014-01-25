@@ -28,7 +28,13 @@ class window.Hand extends Backbone.Collection
 
   dealerPlay: ->
     @models[0].flip()
-    @hit() while @scores()[0] < 17
+    @hit() while @keepPlaying()
     @endTurn()
+
+  keepPlaying: ->
+    if (@scores()[1]? and @scores()[1] < 17) or @scores()[0] < 17
+      console.log 'Keep playing!'
+      return true
+    false
 
 
