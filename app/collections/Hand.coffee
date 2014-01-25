@@ -24,7 +24,7 @@ class window.Hand extends Backbone.Collection
     @scores()[0] > 21
 
   endTurn: ->
-    @trigger 'evaluate', @
+    @trigger 'evaluate'
 
   dealerPlay: ->
     @models[0].flip()
