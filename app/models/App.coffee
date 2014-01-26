@@ -2,6 +2,7 @@
 class window.App extends Backbone.Model
 
   initialize: ->
+    @set 'gameStatus', 'New Game!'
     @set 'deck', deck = new Deck()
     @set 'playerHand', deck.dealPlayer()
     @set 'dealerHand', deck.dealDealer()
@@ -16,17 +17,17 @@ class window.App extends Backbone.Model
     playerScore = (playerScores[1] if playerScores[1]? and playerScores[1] <= 21) or playerScores[0]
     dealerScore = (dealerScores[1] if dealerScores[1]? and dealerScores[1] <= 21) or dealerScores[0]
     if dealerScore > 21
-      console.log 'Dealer busted! Player wins!'
-      return 'Dealer busted! Player wins!'
+      @set 'gameStatus', 'Dealer busted! Player wins!'
+      return
     if playerScore > 21
-      console.log 'Player busted! Dealer wins!'
-      return 'Player busted! Dealer wins!'
+      @set 'gameStatus', 'Player busted! Dealer wins!'
+      return
     if playerScore is dealerScore
-      console.log 'Tie!'
-      return 'Tie!'
+      @set 'gameStatus', 'Tie!'
+      return
     if playerScore > dealerScore
-      console.log 'Player Wins!'
-      return 'Player Wins!'
+      @set 'gameStatus', 'Player Wins!'
+      return
     else
-      console.log 'Player loses!'
-      return 'Player loses!'
+      @set 'gameStatus', 'Player loses!'
+      return
